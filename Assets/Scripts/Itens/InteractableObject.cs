@@ -15,7 +15,7 @@ public class InteractableObject : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && playerInRange)
+        if (Input.GetKeyDown(KeyCode.F) && playerInRange && SelectionManager.Instance.onTarget)
         {
             Debug.Log("O item foi enviado para o inventário!");
 

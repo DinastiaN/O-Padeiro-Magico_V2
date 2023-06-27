@@ -803,7 +803,6 @@ GameObject:
   - component: {fileID: 8649182237714162129}
   - component: {fileID: 3086801232484131315}
   - component: {fileID: 8593866393591242314}
-  - component: {fileID: -1897911352711249337}
   m_Layer: 7
   m_Name: Wolf
   m_TagString: Enemy
@@ -942,19 +941,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
---- !u!114 &-1897911352711249337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 484f4a1750c4ed4409dca90e74b33e1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemName: Lobo
 --- !u!1 &176664
 GameObject:
   m_ObjectHideFlags: 0

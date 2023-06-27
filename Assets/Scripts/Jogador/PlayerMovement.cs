@@ -134,24 +134,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotatePlayer()
     {
-        if (!isAiming && moveDirection != Vector3.zero)
+        if (!altPressed) // Verifica se a tecla ALT não está pressionada
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            Vector3 eulerRotation = targetRotation.eulerAngles;
-            eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
-            targetRotation = Quaternion.Euler(eulerRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
-        }
-        else if (isAiming)
-        {
-            Vector3 cameraForward = cameraTransform.forward;
-            cameraForward.y = 0f;
+            if (!isAiming && moveDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                Vector3 eulerRotation = targetRotation.eulerAngles;
+                eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+                targetRotation = Quaternion.Euler(eulerRotation);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+            }
+            else if (isAiming)
+            {
+                Vector3 cameraForward = cameraTransform.forward;
+                cameraForward.y = 0f;
 
-            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
-            Vector3 eulerRotation = targetRotation.eulerAngles;
-            eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
-            targetRotation = Quaternion.Euler(eulerRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                Vector3 eulerRotation = targetRotation.eulerAngles;
+                eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+                targetRotation = Quaternion.Euler(eulerRotation);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+            }
         }
     }
 

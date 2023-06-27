@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Variáveis
+    public CharacterController character;
+    public Transform cam;
+    public Animator anim;
+    public float characterSpeed = 2f;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -21,21 +25,30 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpCooldown;
     private float jumpTimer;
     private bool canJump = true;
-
-    private CharacterController controller;
-    private Animator anim;
     private PlayerSpellSystem spellSystem;
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
-        spellSystem = GetComponent<PlayerSpellSystem>();
+
     }
+
 
     private void Update()
     {
-        Move();
+        float sideMove = 0;
+        float forwardMove = 0;
+
+        sideMove += Input.GetAxis("Horizontal");
+        forwardMove += Input.GetAxis("Vertical");
+
+        Vector3 sideMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.right;
+        Vector3 forwardMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.forward;
+
+        moveDirection = sideMoveScreen * sideMove + forwardMoveScreen * forwardMove;
+        character.Move(moveDirection * characterSpeed * Time.deltaTime);
+
+        Quaternion characterLookDirection = Quaternion.LookRotation(moveDirection);
+        character.transform.rotation = characterLookDirection;
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -92,10 +105,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        controller.Move(moveDirection * Time.deltaTime);
+        character.Move(moveDirection * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        character.Move(velocity * Time.deltaTime);
     }
 
     private void Idle()

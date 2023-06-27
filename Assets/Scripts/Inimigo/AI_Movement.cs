@@ -14,9 +14,13 @@ public class AI_Movement : MonoBehaviour
     bool isFollowing = false;
     bool isAttacking = false;
     bool isRunning = false;
-
+    bool isWalking = false;
     float waitTime;
     float waitCounter;
+
+    public float walkTime = 2f;
+    float walkCounter;
+    public Vector3[] walkDirections = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
 
     void Start()
     {
@@ -31,28 +35,37 @@ public class AI_Movement : MonoBehaviour
 
     void Update()
     {
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (distance <= followDistance)
+        {
+            // Cancela ações e segue o jogador
+            isFollowing = true;
+            isRunning = false;
+            isWalking = false;
+            animator.SetBool("isRunning", false);
+        }
+
         if (isFollowing)
         {
-            float distance = Vector3.Distance(transform.position, playerTransform.position);
-
-            if (distance <= attackDistance)
+            if (distance > followDistance)
             {
-                // Attack the player
+                // Parar de seguir
+                isFollowing = false;
+                isRunning = false;
+                isWalking = false;
+                animator.SetBool("isRunning", false);
+            }
+            else if (distance <= attackDistance)
+            {
+                // Ataque o jogador
                 isAttacking = true;
                 animator.SetBool("isRunning", false);
                 animator.SetBool("isAttacking", true);
                 Debug.Log("O Lobo está atrás de ti!");
             }
-            else if (distance > followDistance)
-            {
-                // Stop following
-                isFollowing = false;
-                isRunning = false;
-                animator.SetBool("isRunning", false);
-            }
             else
             {
-                // Move towards the player
                 transform.LookAt(playerTransform);
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
             }
@@ -69,15 +82,44 @@ public class AI_Movement : MonoBehaviour
 
             if (waitCounter <= 0)
             {
-                isRunning = true;
-                ChooseAction();
-                waitCounter = waitTime;
+                if (!isWalking)
+                {
+                    isRunning = true;
+                    isWalking = false;
+                    ChooseAction();
+                    waitCounter = waitTime;
+                }
+                else
+                {
+                    isRunning = false;
+                    isWalking = true;
+                    walkCounter = walkTime;
+                    animator.SetBool("isRunning", true);
+                    ChooseWalkDirection();
+                }
             }
 
             if (isRunning)
             {
                 animator.SetBool("isRunning", true);
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            }
+            else if (isWalking)
+            {
+                walkCounter -= Time.deltaTime;
+
+                if (walkCounter <= 0)
+                {
+                    isWalking = false;
+                    ChooseAction();
+                    waitCounter = waitTime;
+                }
+
+                if (isWalking)
+                {
+                    animator.SetBool("isRunning", true);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                }
             }
         }
     }
@@ -86,21 +128,35 @@ public class AI_Movement : MonoBehaviour
     {
         float randomValue = Random.value;
 
-        if (randomValue < 0.5f)
+        if (randomValue < 0.3f)
         {
             isFollowing = false;
             isRunning = true;
+            isWalking = false;
             animator.SetBool("isRunning", true);
         }
-        else
+        else if (randomValue < 0.6f)
         {
             isFollowing = true;
             isRunning = false;
+            isWalking = false;
             animator.SetBool("isRunning", false);
+        }
+        else
+        {
+            isFollowing = false;
+            isRunning = false;
+            isWalking = true;
+            animator.SetBool("isRunning", true);
+            ChooseWalkDirection();
         }
     }
 
-    // Call this method when the player enters the AI's detection range
+    void ChooseWalkDirection()
+    {
+        transform.rotation = Quaternion.LookRotation(walkDirections[Random.Range(0, walkDirections.Length)]);
+    }
+
     public void StartFollowing()
     {
         isFollowing = true;

@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController character;
     public Transform cam;
     public Animator anim;
-    public float characterSpeed = 2f;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -29,26 +27,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-
+        character = GetComponent<CharacterController>();
+        spellSystem = GetComponent<PlayerSpellSystem>();
     }
-
 
     private void Update()
     {
-        float sideMove = 0;
-        float forwardMove = 0;
-
-        sideMove += Input.GetAxis("Horizontal");
-        forwardMove += Input.GetAxis("Vertical");
-
-        Vector3 sideMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.right;
-        Vector3 forwardMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.forward;
-
-        moveDirection = sideMoveScreen * sideMove + forwardMoveScreen * forwardMove;
-        character.Move(moveDirection * characterSpeed * Time.deltaTime);
-
-        Quaternion characterLookDirection = Quaternion.LookRotation(moveDirection);
-        character.transform.rotation = characterLookDirection;
+        Move();
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -76,11 +61,14 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float moveZ = Input.GetAxis("Vertical");
-        float moveX = Input.GetAxis("Horizontal");
+        float sideMove = Input.GetAxis("Horizontal");
+        float forwardMove = Input.GetAxis("Vertical");
 
-        moveDirection = new Vector3(moveX, moveDirection.y, moveZ);
-        moveDirection = transform.TransformDirection(moveDirection);
+        Vector3 sideMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.right;
+        Vector3 forwardMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.forward;
+
+        moveDirection = sideMoveScreen * sideMove + forwardMoveScreen * forwardMove;
+        moveDirection = moveDirection.normalized;
 
         if (isGrounded)
         {
@@ -105,10 +93,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        character.Move(moveDirection * Time.deltaTime);
-
         velocity.y += gravity * Time.deltaTime;
-        character.Move(velocity * Time.deltaTime);
+        character.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
+
+        // Rotate character towards movement direction
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion characterLookRotation = Quaternion.LookRotation(moveDirection);
+            character.transform.rotation = Quaternion.Slerp(character.transform.rotation, characterLookRotation, Time.deltaTime * 10f);
+        }
     }
 
     private void Idle()

@@ -17,7 +17,6 @@ public class MenuJogo : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
 
-        if (!DataPersistenceManager.instance.HasGameData())
         {
             ContinueButton.interactable = false;
         }
@@ -25,7 +24,6 @@ public class MenuJogo : MonoBehaviour
     public void Jogar()
     {
         DesativarBotoes();
-        DataPersistenceManager.instance.NewGame();
         SceneManager.LoadSceneAsync("Jogo");
     }
 

@@ -70,6 +70,6 @@ public class MenuPausa : MonoBehaviour
 
     public void Salvar()
     {
-        DataPersistenceManager.instance.SaveGame();
+
     }
 }

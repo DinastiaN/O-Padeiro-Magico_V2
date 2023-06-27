@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump = true;
 
     private bool isAiming = false;
+    private bool altPressed = false;
 
     private void Start()
     {
@@ -66,6 +67,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         RotatePlayer();
+
+        // Verifica se a tecla ALT está pressionada para liberar/mostrar o cursor do mouse
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            altPressed = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftAlt))
+        {
+            altPressed = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     private void Move()

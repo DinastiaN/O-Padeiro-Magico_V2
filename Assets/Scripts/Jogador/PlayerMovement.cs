@@ -68,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
         RotatePlayer();
 
-        // Verifica se a tecla ALT está pressionada para liberar/mostrar o cursor do mouse
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             altPressed = true;
@@ -134,13 +133,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotatePlayer()
     {
-        if (!altPressed) // Verifica se a tecla ALT não está pressionada
+        if (!altPressed)
         {
             if (!isAiming && moveDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 Vector3 eulerRotation = targetRotation.eulerAngles;
-                eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+                eulerRotation.x = 0f;
                 targetRotation = Quaternion.Euler(eulerRotation);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
             }
@@ -151,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
                 Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
                 Vector3 eulerRotation = targetRotation.eulerAngles;
-                eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+                eulerRotation.x = 0f;
                 targetRotation = Quaternion.Euler(eulerRotation);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
             }

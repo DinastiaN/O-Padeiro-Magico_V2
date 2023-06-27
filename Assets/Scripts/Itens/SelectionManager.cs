@@ -39,9 +39,9 @@ public class SelectionManager : MonoBehaviour
         {
             var selectionTransform = hit.transform;
 
-            InteractableObject ourInteractable = selectionTransform.GetComponent<InteractableObject>();
+            InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
 
-            if (ourInteractable && ourInteractable.playerInRange)
+            if (interactable && interactable.playerInRange)
             {
                 onTarget = true;
 

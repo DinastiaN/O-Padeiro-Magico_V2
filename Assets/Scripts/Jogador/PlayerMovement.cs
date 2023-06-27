@@ -5,30 +5,44 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController character;
-    public Transform cam;
     public Animator anim;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
+    public float moveSpeed;
+    public float walkSpeed;
+    public float runSpeed;
+    public Transform cameraTransform;
 
     private Vector3 moveDirection;
     private Vector3 velocity;
+    private PlayerSpellSystem spellSystem;
 
-    [SerializeField] private bool isGrounded;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float gravity;
+    private bool isGrounded;
+    private float groundCheckDistance;
+    private LayerMask groundMask;
+    private float gravity;
 
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float jumpCooldown;
+    private float jumpHeight;
+    private float jumpCooldown;
     private float jumpTimer;
     private bool canJump = true;
-    private PlayerSpellSystem spellSystem;
+
+    private bool isAiming = false;
 
     private void Start()
     {
-        character = GetComponent<CharacterController>();
+        groundCheckDistance = 0.2f;
+        groundMask = LayerMask.GetMask("Ground");
+        gravity = -9.81f;
+
+        jumpHeight = 3f;
+        jumpCooldown = 1f;
+        jumpTimer = jumpCooldown;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         spellSystem = GetComponent<PlayerSpellSystem>();
+        if (spellSystem == null)
+            spellSystem = gameObject.AddComponent<PlayerSpellSystem>();
     }
 
     private void Update()
@@ -50,25 +64,23 @@ public class PlayerMovement : MonoBehaviour
                 jumpTimer = 0f;
             }
         }
+
+        RotatePlayer();
     }
 
     private void Move()
     {
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
+        isGrounded = character.isGrounded;
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-        float sideMove = Input.GetAxis("Horizontal");
-        float forwardMove = Input.GetAxis("Vertical");
+        float moveZ = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxis("Horizontal");
 
-        Vector3 sideMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.right;
-        Vector3 forwardMoveScreen = Quaternion.Euler(0f, cam.eulerAngles.y, 0f) * Vector3.forward;
-
-        moveDirection = sideMoveScreen * sideMove + forwardMoveScreen * forwardMove;
-        moveDirection = moveDirection.normalized;
+        moveDirection = (moveZ * cameraTransform.forward + moveX * cameraTransform.right).normalized;
 
         if (isGrounded)
         {
@@ -93,14 +105,38 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        character.Move(moveDirection * Time.deltaTime + velocity * Time.deltaTime);
-
-        // Rotate character towards movement direction
-        if (moveDirection != Vector3.zero)
+        if (!isGrounded)
         {
-            Quaternion characterLookRotation = Quaternion.LookRotation(moveDirection);
-            character.transform.rotation = Quaternion.Slerp(character.transform.rotation, characterLookRotation, Time.deltaTime * 10f);
+            moveDirection.x = 0f;
+            moveDirection.z = 0f;
+        }
+
+        character.Move(moveDirection * Time.deltaTime);
+
+        velocity.y += gravity * Time.deltaTime;
+        character.Move(velocity * Time.deltaTime);
+    }
+
+    private void RotatePlayer()
+    {
+        if (!isAiming && moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            Vector3 eulerRotation = targetRotation.eulerAngles;
+            eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+            targetRotation = Quaternion.Euler(eulerRotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+        }
+        else if (isAiming)
+        {
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0f;
+
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+            Vector3 eulerRotation = targetRotation.eulerAngles;
+            eulerRotation.x = 0f; // Define a rotação no eixo X para 0 (sem rotação)
+            targetRotation = Quaternion.Euler(eulerRotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
         }
     }
 
@@ -126,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         if (canJump)
         {
             anim.SetBool("Jump", true);
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canJump = false;
         }
     }
@@ -134,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
     public void Attack()
     {
         anim.SetTrigger("Attack");
-        spellSystem.CastSpell();
+        if (spellSystem != null)
+            spellSystem.CastSpell();
     }
 }

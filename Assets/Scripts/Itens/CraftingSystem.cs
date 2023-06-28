@@ -105,28 +105,20 @@ public class CraftingSystem : MonoBehaviour
         }
 
         StartCoroutine(calculate());
-
-        RefreshNeededItems();
     }
 
 
     public IEnumerator calculate()
     {
-        yield return new WaitForSeconds(1f);
-
+        yield return 0;
         InventorySystem.Instance.ReCalculateList();
-
-
+        RefreshNeededItems();
     }
 
 
 
     void Update()
     {
-
-        RefreshNeededItems();
-
-
 
         if (Input.GetKeyDown(KeyCode.O) && !isOpen)
         {
@@ -152,7 +144,7 @@ public class CraftingSystem : MonoBehaviour
         }
     }
 
-    private void RefreshNeededItems()
+    public void RefreshNeededItems()
     {
         int cogumelo_count = 0;
         int farinha_count = 0;

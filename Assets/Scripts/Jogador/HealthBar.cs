@@ -26,10 +26,6 @@ public class HealthBar : MonoBehaviour
         currentHealth = playerStats.GetComponent<PlayerStats>().currentHealth;
         maxHealth = playerStats.GetComponent<PlayerStats>().maxHealth;
 
-
-        float fillValue = currentHealth / maxHealth;
-        slider.value = fillValue;
-
         healthCounter.text = currentHealth + "/" + maxHealth;
     }
 }

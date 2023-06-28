@@ -30,6 +30,8 @@ public class ManaBar : MonoBehaviour
         float fillValue = currentMana / maxMana;
         slider.value = fillValue;
 
-        manaCounter.text = currentMana + "/" + maxMana;
+        int roundedCurrentMana = Mathf.RoundToInt(currentMana);
+        
+        manaCounter.text = roundedCurrentMana + "/" + maxMana;
     }
 }

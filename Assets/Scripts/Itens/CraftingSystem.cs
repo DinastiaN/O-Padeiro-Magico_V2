@@ -13,24 +13,18 @@ public class CraftingSystem : MonoBehaviour
 
     public List<string> inventoryItemList = new List<string>();
 
-    //Categoria dos botões
 
     Button cozinharBTN;
     Button farinharBTN;
-
-    //Butão de Cozinhar
 
     Button cozinharPaoBTN;
 
     Button cozinharFarinhaBTN;
 
-    //Requerimentos para cozinhar
-
     TextMeshProUGUI PaoReq1, PaoReq2, FarinhaReq1, FarinhaReq2;
 
     public bool isOpen;
 
-    // Receitas
     public Blueprint PaoReceita = new Blueprint("Pão", 2, "Farinha", 3, "Água", 1);
 
     public Blueprint FarinhaReceita = new Blueprint("Farinha", 2, "Trigo", 5, "Água", 1);

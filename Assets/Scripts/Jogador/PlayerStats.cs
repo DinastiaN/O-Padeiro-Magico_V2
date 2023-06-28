@@ -6,6 +6,7 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; set;}
 
+    public bool playerDied = false;
 
     public float currentHealth;
     public float maxHealth;
@@ -40,9 +41,19 @@ public class PlayerStats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             currentHealth -= 10;
+
         }
     }
 
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth -= damageAmount;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
     public void setHealth(float newHealth)
     {
@@ -52,5 +63,11 @@ public class PlayerStats : MonoBehaviour
     public void setMana(float newMana)
     {
         currentMana = newMana;
+    }
+
+    private void Die()
+    {
+        playerDied = true;
+    Debug.Log("O jogador morreu!");
     }
 }

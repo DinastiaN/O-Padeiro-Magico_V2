@@ -4,46 +4,42 @@ using UnityEngine;
 
 public class PlayerSpellSystem : MonoBehaviour
 {
-    [SerializeField] private float maxMana = 100f;
-    [SerializeField] private float currentMana = 100f;
+    [SerializeField] private PlayerStats playerStats;
     [SerializeField] private float rechargeRate = 10f;
     [SerializeField] private float spellCooldown = 1f;
     [SerializeField] private float spellCost = 20f;
     [SerializeField] private Transform castPoint;
     [SerializeField] private GameObject spellObject;
-    [SerializeField] private float spellSpeed = 10f; 
-    [SerializeField] private float spellDuration = 5f;  
+    [SerializeField] private float spellSpeed = 10f;
+    [SerializeField] private float spellDuration = 5f;
     [SerializeField] private float delay = 1f;
 
     private bool canCast = true;
 
+    private void Start()
+    {
+        playerStats = PlayerStats.Instance;
+    }
+
     private void Update()
     {
         RechargeMana();
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CastSpell();
-        }
     }
 
     private void RechargeMana()
     {
-        if (currentMana < maxMana)
-        {
-            currentMana += rechargeRate * Time.deltaTime;
-            currentMana = Mathf.Clamp(currentMana, 0f, maxMana);
-        }
+        playerStats.currentMana += rechargeRate * Time.deltaTime;
+        playerStats.currentMana = Mathf.Clamp(playerStats.currentMana, 0f, playerStats.maxMana);
     }
 
     public void CastSpell()
     {
-        if (canCast && currentMana >= spellCost)
+        if (canCast && playerStats.currentMana >= spellCost)
         {
             StartCoroutine(SpellCooldown());
             StartCoroutine(SpellEffect());
 
-            currentMana -= spellCost;
+            playerStats.setMana(playerStats.currentMana - spellCost);
         }
     }
 
@@ -80,6 +76,4 @@ public class PlayerSpellSystem : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
 }

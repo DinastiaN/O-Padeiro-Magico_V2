@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AI_Movement : MonoBehaviour
 {
+
     Animator animator;
 
     public float moveSpeed = 0.2f;
@@ -39,7 +40,6 @@ public class AI_Movement : MonoBehaviour
 
         if (distance <= followDistance)
         {
-            // Cancela ações e segue o jogador
             isFollowing = true;
             isRunning = false;
             isWalking = false;
@@ -74,8 +74,8 @@ public class AI_Movement : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
             animator.SetBool("isAttacking", true);
-            Debug.Log("O Lobo matou-te!");
         }
+
         else
         {
             waitCounter -= Time.deltaTime;

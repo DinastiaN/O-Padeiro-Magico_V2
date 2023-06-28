@@ -73,7 +73,7 @@ public class CraftingSystem : MonoBehaviour
         cozinharPaoBTN = cozinharScreenUI.transform.Find("Tabua").transform.Find("Cozinhar").GetComponent<Button>();
         cozinharPaoBTN.onClick.AddListener(delegate { Cozinhar(PaoReceita); });
 
-        cozinharFarinhaBTN = cozinharScreenUI.transform.Find("Tabua").transform.Find("Farinhar").GetComponent<Button>();
+        cozinharFarinhaBTN = farinhaScreenUI.transform.Find("Tabua").transform.Find("Farinhar").GetComponent<Button>();
         cozinharFarinhaBTN.onClick.AddListener(delegate { Cozinhar(FarinhaReceita); });
 
     }
@@ -92,7 +92,7 @@ public class CraftingSystem : MonoBehaviour
 
     void Cozinhar(Blueprint blueprintToCraft)
     {
-        InventorySystem.Instance.AddToInventory(blueprintToCraft.name);
+        InventorySystem.Instance.AddToInventory(blueprintToCraft.itemName);
 
         if (blueprintToCraft.numOfRequirements == 1)
         {
@@ -104,12 +104,20 @@ public class CraftingSystem : MonoBehaviour
             InventorySystem.Instance.RemoveItem(blueprintToCraft.Req2, blueprintToCraft.Req2amount);
         }
 
-        InventorySystem.Instance.ReCalculateList();
+        StartCoroutine(calculate());
 
         RefreshNeededItems();
     }
 
 
+    public IEnumerator calculate()
+    {
+        yield return new WaitForSeconds(1f);
+
+        InventorySystem.Instance.ReCalculateList();
+
+
+    }
 
 
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5899411131799330237}
   - component: {fileID: 8375036692408079863}
   - component: {fileID: 4025862595681647922}
+  - component: {fileID: -114452674792744656}
   m_Layer: 5
   m_Name: Farinha
   m_TagString: Untagged
@@ -102,3 +103,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-114452674792744656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5899411131799330235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa5ee9e3a19cda46be6bf5bf333b686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrashable: 1
+  thisName: Farinha
+  thisDescription: Farinha de trigo
+  thisFunctionality: Cozinhar
+  isConsumable: 0
+  healthEffect: 0
+  manaEffect: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8419053185726003871}
   - component: {fileID: 5850892872587113173}
   - component: {fileID: -7866051468207252976}
+  - component: {fileID: 7344806667566811904}
   m_Layer: 5
   m_Name: Cogumelo
   m_TagString: Untagged
@@ -102,3 +103,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7344806667566811904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419053185726003865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa5ee9e3a19cda46be6bf5bf333b686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisName: Cogumelo
+  thisDescription: "Cogumelo m\xE1gico azul."
+  thisFunctionality: Pode ser cozinhado.
+  isConsumable: 0
+  healthEffect: 0
+  manaEffect: 0

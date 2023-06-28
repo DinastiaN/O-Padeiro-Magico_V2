@@ -42,4 +42,15 @@ public class PlayerStats : MonoBehaviour
             currentHealth -= 10;
         }
     }
+
+
+    public void setHealth(float newHealth)
+    {
+        currentHealth = newHealth;
+    }
+
+    public void setMana(float newMana)
+    {
+        currentMana = newMana;
+    }
 }

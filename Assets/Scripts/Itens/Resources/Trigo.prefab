@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3086666342397462426}
   - component: {fileID: 1095213613066194896}
   - component: {fileID: 5536715281260472085}
+  - component: {fileID: -5801081182500850290}
   m_Layer: 5
   m_Name: Trigo
   m_TagString: Untagged
@@ -102,3 +103,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-5801081182500850290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3086666342397462428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa5ee9e3a19cda46be6bf5bf333b686, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisName: Trigo
+  thisDescription: Trigo da clareira secreta.
+  thisFunctionality: Cozinhar
+  isConsumable: 0
+  healthEffect: 0
+  manaEffect: 0

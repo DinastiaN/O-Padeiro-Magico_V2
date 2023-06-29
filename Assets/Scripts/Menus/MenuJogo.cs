@@ -3,57 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuJogo : MonoBehaviour
 {
-    [Header("Botões do Menu")]
-
-    [SerializeField] private Button NewGameButton;
-    [SerializeField] private Button ContinueButton;
-    [SerializeField] private GameObject painelMainMenu;
-    [SerializeField] private GameObject painelOpcoes;
-
-    public void Start()
+    public void NovoJogo()
     {
-        Cursor.lockState = CursorLockMode.None;
-
-        {
-            ContinueButton.interactable = false;
-        }
-    }
-    public void Jogar()
-    {
-        DesativarBotoes();
-        SceneManager.LoadSceneAsync("Jogo");
+        SceneManager.LoadScene("Jogo");
     }
 
-    public void Continuar()
+    public void Sair()
     {
-        DesativarBotoes();
-        SceneManager.LoadScene(1);
-    }
-
-    public void Opcoes()
-    {
-        painelMainMenu.SetActive(false);
-        painelOpcoes.SetActive(true);
-    }
-
-    public void FecharOpcoes()
-    {
-        painelMainMenu.SetActive(true);
-        painelOpcoes.SetActive(false);
-    }
-
-    public void SairJogo()
-    {
-        Debug.Log("Fechar o Jogo.");
+        Debug.Log("Fechaste o jogo.");
         Application.Quit();
     }
 
-    private void DesativarBotoes()
-    {
-        NewGameButton.interactable = false;
-        ContinueButton.interactable = false;
-    }
+
+
+
 }

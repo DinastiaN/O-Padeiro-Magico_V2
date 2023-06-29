@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource fireball;
     public AudioSource abrirmenu;
 
+    public AudioSource mainMenuM;
     public AudioSource MusicaComeco;
 
     private void Awake()

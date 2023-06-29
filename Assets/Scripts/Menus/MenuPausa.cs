@@ -7,6 +7,7 @@ public class MenuPausa : MonoBehaviour
 {
     [SerializeField] private GameObject painelMenuPausa;
     [SerializeField] private GameObject painelOpcoes;
+    [SerializeField] private GameObject painelSalvar;
 
     private bool menuAberto = false;
 
@@ -34,10 +35,14 @@ public class MenuPausa : MonoBehaviour
     public void FecharMenu()
     {
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         painelMenuPausa.SetActive(false);
         menuAberto = false;
+
+        if (CraftingSystem.Instance.isOpen == false && InventorySystem.Instance.isOpen == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void SairJogo()
@@ -73,11 +78,17 @@ public class MenuPausa : MonoBehaviour
         painelMenuPausa.SetActive(true);
     }
 
-    public void Salvar()
+    public void AbrirSalvar()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+        painelSalvar.SetActive(true);
+        painelMenuPausa.SetActive(false);
+    }
 
-
-
+    public void FecharSalvar()
+    {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+        painelSalvar.SetActive(false);
+        painelMenuPausa.SetActive(true);
     }
 }

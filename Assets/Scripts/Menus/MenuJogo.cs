@@ -18,6 +18,12 @@ public class MenuJogo : MonoBehaviour
         Application.Quit();
     }
 
+    public void Som()
+    {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+        Debug.Log("O botão está a fazer barulho, I HOPE");
+    }
+
 
 
 

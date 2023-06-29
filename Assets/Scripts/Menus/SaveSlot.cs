@@ -7,17 +7,24 @@ using System;
 
 public class SaveSlot : MonoBehaviour
 {
-    Button button;
-    public TextMeshProUGUI buttontext;
+    private Button button;
+    private TextMeshProUGUI buttontext;
 
     public int slotNumber;
 
+
+    public GameObject UIalerta;
+    public Button BTNSim;
+    public Button BTNNão;
 
 
     public void Awake()
     {
         button = GetComponent<Button>();
         buttontext = transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+
+        BTNSim = UIalerta.transform.Find("Sim").GetComponent<Button>();
+        BTNNão = UIalerta.transform.Find("Não").GetComponent<Button>();
     }
 
 
@@ -25,37 +32,59 @@ public class SaveSlot : MonoBehaviour
     {
         button.onClick.AddListener(() =>
         {
-            if (isSlotEmpty())
+            if (SaveManager.Instance.IsSlotEmpty(slotNumber))
             {
-                //Save.Manager.Instance.SaveGame(slotNumber);
-                DateTime dt = DateTime.Now;
-                string time = dt.ToString("yyyy-MM-dd HH:mm");
-
-                buttontext.text = "Saved Game " + slotNumber + " | " + time;
-
-
-                DeselectButton();
+                SaveGameConfirmed();
             }
             else
             {
-                //DisplayOverrideWarning
+                DisplayOverriWarning();
             }
         }
         );
     }
 
-    private void DeselectButton()
+
+    private void Update()
     {
-        GameObject myEventSystem = GameObject.Find("EventSystem");
-        myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
+        if (SaveManager.Instance.IsSlotEmpty(slotNumber))
+        {
+            buttontext.text = "Empty";
+        }
+        else
+        {
+            buttontext.text = PlayerPrefs.GetString("Slot" + slotNumber + "Description");
+        }
     }
+    public void DisplayOverriWarning()
+        {
+            UIalerta.SetActive(true);
 
+            BTNSim.onClick.AddListener(() =>
+            {
+                SaveGameConfirmed();
+                UIalerta.SetActive(false);
+            });
 
+            BTNNão.onClick.AddListener(() =>
+            {
+                UIalerta.SetActive(false);
+            });
+            }
 
-
-
-    private bool isSlotEmpty()
+    private void SaveGameConfirmed()
     {
-        throw new NotImplementedException();
+        SaveManager.Instance.SaveGame(slotNumber);
+        DateTime dt = DateTime.Now;
+        string time = dt.ToString("yyyy-MM-dd     HH:mm");
+
+        string description = "Saved Game " + slotNumber + " | " + time;
+
+        buttontext.text = description;
+
+        PlayerPrefs.SetString("Slot" + slotNumber + "Description", description);
+
+
+        SaveManager.Instance.DeselectButton();
     }
 }

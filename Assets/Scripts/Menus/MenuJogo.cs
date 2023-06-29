@@ -9,15 +9,6 @@ public class MenuJogo : MonoBehaviour
 {
     public Button LoadGameBTN;
 
-
-    private void Start()
-    {
-        LoadGameBTN.onClick.AddListener(() =>
-        {
-            SaveManager.Instance.StartLoadedGame();
-        });
-    }
-
     public void NovoJogo()
     {
         SceneManager.LoadScene("Jogo");

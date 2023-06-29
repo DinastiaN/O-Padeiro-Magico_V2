@@ -19,6 +19,8 @@ public class MenuPausa : MonoBehaviour
                 AbrirMenu();
             else
                 FecharMenu();
+                FecharOpcoes();
+                FecharSalvar();
         }
     }
 
@@ -62,38 +64,30 @@ public class MenuPausa : MonoBehaviour
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+              
     }
 
     public void AbrirOpcoes()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelOpcoes.SetActive(true);
-        painelMenuPausa.SetActive(false);
     }
 
     public void FecharOpcoes()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelOpcoes.SetActive(false);
-        painelMenuPausa.SetActive(true);
     }
 
     public void AbrirSalvar()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelSalvar.SetActive(true);
-        painelMenuPausa.SetActive(false);
     }
 
     public void FecharSalvar()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelSalvar.SetActive(false);
-        painelMenuPausa.SetActive(true);
-    }
-
-    public void TempSaveGame()
-    {
-        SaveManager.Instance.SaveGame();
     }
 }

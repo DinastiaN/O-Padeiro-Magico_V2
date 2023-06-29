@@ -15,8 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private PlayerSpellSystem spellSystem;
 
-    private bool isGrounded;
-    private float groundCheckDistance;
+    public bool isGrounded;
     private LayerMask groundMask;
     private float gravity;
 
@@ -28,14 +27,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isAiming = false;
     private bool altPressed = false;
 
+    private Vector3 lastPosition = new Vector3(0f, 0f, 0f);
+    public bool isMoving;
+
+
+
     private void Start()
     {
-        groundCheckDistance = 0.2f;
         groundMask = LayerMask.GetMask("Ground");
         gravity = -9.81f;
 
         jumpHeight = 3f;
-        jumpCooldown = 1f;
+        jumpCooldown = 4f;
         jumpTimer = jumpCooldown;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -80,6 +83,18 @@ public class PlayerMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+        if (lastPosition != gameObject.transform.position && isGrounded == true)
+        {
+            isMoving = true;
+            SoundManager.Instance.PlaySound(SoundManager.Instance.walkTerrain);
+        }
+        else
+        {
+            isMoving = false;
+            SoundManager.Instance.walkTerrain.Stop();
+        }
+        lastPosition = gameObject.transform.position;
     }
 
     private void Move()
@@ -171,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
     private void Run()
     {
         moveSpeed = runSpeed;
-        anim.SetFloat("Speed", 1f, 0.1f, Time.deltaTime);
+        anim.SetFloat("Speed", 1.5f, 0.5f, Time.deltaTime);
     }
 
     private void Jump()

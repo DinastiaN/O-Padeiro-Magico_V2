@@ -797,11 +797,10 @@ GameObject:
   m_Component:
   - component: {fileID: 477254}
   - component: {fileID: 9547338}
-  - component: {fileID: 1167168894296095479}
-  - component: {fileID: 8593866393591242314}
   - component: {fileID: -8422124029095389155}
   - component: {fileID: 8649182237714162129}
   - component: {fileID: 3086801232484131315}
+  - component: {fileID: 8593866393591242314}
   - component: {fileID: 7476874866357675398}
   - component: {fileID: -5502521712211238091}
   m_Layer: 7
@@ -854,42 +853,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1167168894296095479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4baa306ddc103ab499ba484f9e9fff81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStats: {fileID: 0}
-  damageAmount: 10
-  moveSpeed: 6
-  attackDistance: 3
-  followDistance: 20
-  walkTime: 2
-  walkDirections:
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: -1}
-  - {x: -1, y: 0, z: 0}
-  - {x: 1, y: 0, z: 0}
---- !u!114 &8593866393591242314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5abac89a7462f8a428066e3166b5bead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!54 &-8422124029095389155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -932,6 +895,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 3.5}
   m_Center: {x: 0, y: 1.05, z: -0.21}
+--- !u!114 &8593866393591242314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abac89a7462f8a428066e3166b5bead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!114 &7476874866357675398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,11 +920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4baa306ddc103ab499ba484f9e9fff81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 0}
-  damageAmount: 10
   moveSpeed: 6
   attackDistance: 1
-  followDistance: 50
+  followDistance: 40
   walkTime: 4
   walkDirections:
   - {x: 0, y: 0, z: 1}
@@ -967,9 +941,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa90400d39c98114e932e74843beff69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDamageAmount: 20
+  damageAmount: 22
+  attackDelay: 1
   playerInRange: 0
-  damageAfterTime: 1
   playerObj: {fileID: 0}
 --- !u!1 &176664
 GameObject:

@@ -34,6 +34,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         if (!Item)
         {
 
+            SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+
             DragDrop.itemBeingDragged.transform.SetParent(transform);
             DragDrop.itemBeingDragged.transform.localPosition = new Vector2(0, 0);
 

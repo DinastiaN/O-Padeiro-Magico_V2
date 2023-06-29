@@ -118,6 +118,6 @@ MonoBehaviour:
   thisName: Cogumelo
   thisDescription: "Cogumelo m\xE1gico azul."
   thisFunctionality: Pode ser cozinhado.
-  isConsumable: 0
-  healthEffect: 0
-  manaEffect: 0
+  isConsumable: 1
+  healthEffect: 20
+  manaEffect: 10

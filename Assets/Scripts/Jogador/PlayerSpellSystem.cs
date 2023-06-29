@@ -38,7 +38,7 @@ public class PlayerSpellSystem : MonoBehaviour
         {
             StartCoroutine(SpellCooldown());
             StartCoroutine(SpellEffect());
-
+            SoundManager.Instance.PlaySound(SoundManager.Instance.fireball);
             playerStats.setMana(playerStats.currentMana - spellCost);
         }
     }

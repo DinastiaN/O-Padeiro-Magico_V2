@@ -74,18 +74,23 @@ public class CraftingSystem : MonoBehaviour
 
     void OpenCookingCategory()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         craftingScreenUI.SetActive(false);
         cozinharScreenUI.SetActive(true);
     }
 
     void OpenFarinhaCategory()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         craftingScreenUI.SetActive(false);
         farinhaScreenUI.SetActive(true);
     }
 
     void Cozinhar(Blueprint blueprintToCraft)
     {
+
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+
         InventorySystem.Instance.AddToInventory(blueprintToCraft.itemName);
 
         if (blueprintToCraft.numOfRequirements == 1)

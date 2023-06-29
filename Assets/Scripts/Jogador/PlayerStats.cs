@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
 
     public float currentMana;
     public float maxMana;
-
+    internal object playerStats;
 
     private void Awake()
     {
@@ -38,22 +38,18 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if(currentHealth <= 0)
         {
-            currentHealth -= 10;
-
+            currentHealth = 0;
+            Die();
         }
     }
 
     public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
     }
+
 
     public void setHealth(float newHealth)
     {
@@ -68,6 +64,6 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         playerDied = true;
-    Debug.Log("O jogador morreu!");
+        Debug.Log("O jogador morreu!");
     }
 }

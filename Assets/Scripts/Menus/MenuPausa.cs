@@ -23,6 +23,7 @@ public class MenuPausa : MonoBehaviour
 
     public void AbrirMenu()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.abrirmenu);
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -47,29 +48,36 @@ public class MenuPausa : MonoBehaviour
 
     public void ResumirJogo()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         FecharMenu();
     }
 
     public void VoltarMenuInicial()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
 
     public void AbrirOpcoes()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelOpcoes.SetActive(true);
         painelMenuPausa.SetActive(false);
     }
 
     public void FecharOpcoes()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         painelOpcoes.SetActive(false);
         painelMenuPausa.SetActive(true);
     }
 
     public void Salvar()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
+
+
 
     }
 }

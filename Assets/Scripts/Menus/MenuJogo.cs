@@ -7,6 +7,17 @@ using TMPro;
 
 public class MenuJogo : MonoBehaviour
 {
+    public Button LoadGameBTN;
+
+
+    private void Start()
+    {
+        LoadGameBTN.onClick.AddListener(() =>
+        {
+            SaveManager.Instance.StartLoadedGame();
+        });
+    }
+
     public void NovoJogo()
     {
         SceneManager.LoadScene("Jogo");
@@ -23,8 +34,5 @@ public class MenuJogo : MonoBehaviour
         SoundManager.Instance.PlaySound(SoundManager.Instance.menuButton);
         Debug.Log("O botão está a fazer barulho, I HOPE");
     }
-
-
-
 
 }

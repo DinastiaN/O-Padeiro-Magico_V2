@@ -91,4 +91,9 @@ public class MenuPausa : MonoBehaviour
         painelSalvar.SetActive(false);
         painelMenuPausa.SetActive(true);
     }
+
+    public void TempSaveGame()
+    {
+        SaveManager.Instance.SaveGame();
+    }
 }

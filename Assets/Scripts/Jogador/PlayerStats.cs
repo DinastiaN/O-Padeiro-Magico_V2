@@ -14,6 +14,9 @@ public class PlayerStats : MonoBehaviour
 
     public float currentMana;
     public float maxMana;
+
+    public Transform playerBody;
+
     internal object playerStats;
 
     private void Awake()
